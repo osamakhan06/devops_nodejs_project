@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
  
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT =  3000;
  
 // Middleware
 app.use(cors());
@@ -57,6 +57,6 @@ res.status(204).send();
 });
  
 // Start the server
-app.listen(PORT, () => {
-console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
 });
