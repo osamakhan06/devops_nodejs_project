@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:20'
+        }
+    }
 
     stages {
 
@@ -17,7 +21,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t osamaahmadkhan/devops-nodejs-project:latest .'
+                sh 'docker build -t osamaahmadkhan/devops_nodejs_project:latest .'
             }
         }
     }
