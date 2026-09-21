@@ -30,6 +30,9 @@ pipeline {
                     args '-v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
+            environment {
+                HOME = "${env.WORKSPACE}"
+            }
             steps {
                 sh 'docker --version'
                 sh 'docker build -t osamaahmadkhan/devops_nodejs_project:latest .'
