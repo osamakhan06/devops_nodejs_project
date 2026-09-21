@@ -1,36 +1,35 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:27-cli'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent none
 
     stages {
 
         stage('Checkout') {
+            agent any
             steps {
                 checkout scm
             }
         }
 
-        stage('Install Node.js') {
+        stage('Install Dependencies') {
+            agent {
+                docker { image 'node:20-alpine' }
+            }
             steps {
                 sh '''
-                    apk add --no-cache nodejs npm
                     node --version
                     npm --version
+                    npm ci
                 '''
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm ci'
-            }
-        }
-
         stage('Build Docker Image') {
+            agent {
+                docker {
+                    image 'docker:27-cli'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
                 sh 'docker --version'
                 sh 'docker build -t osamaahmadkhan/devops_nodejs_project:latest .'
